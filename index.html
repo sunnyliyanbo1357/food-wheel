@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spin the Lucky Wheel</title>
-    <link rel="stylesheet" href="src/styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Spin the Lucky Wheel!</h1>
-        <div class="wheel-container">
-            <canvas id="wheel" width="400" height="400"></canvas>
-        </div>
-        <button id="spinButton">Spin</button>
-        <p id="result"></p>
-    </div>
+<!doctype html>
+<html>
+  <head>
+    <title>Welcome to Automation Anywhere's Spin the Wheel</title>
+    <meta charset="UTF-8" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+    </style>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
 
-    <script src="src/script.js"></script>
-</body>
+  <body>
+    <p id="result">What To Order?</p>
+    <div id="spin_the_wheel">
+      <canvas id="wheel" width="800" height="800"></canvas>
+      <div id="spin">SPIN</div>
+    </div>
+    <script defer src="src/script.js"></script>
+  </body>
 </html>

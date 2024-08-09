@@ -1,83 +1,128 @@
-const canvas = document.getElementById("wheel");
-const ctx = canvas.getContext("2d");
-const spinButton = document.getElementById("spinButton");
-const result = document.getElementById("result");
-
-
-const zhuzhu = ["Xi'an Famous Food", "Five Spice", ""]
-const baicai = ["", ]
-
-
-const segments = [
-    "Win $50",
-    "Try Again",
-    "Win $100",
-    "Try Again",
-    "Win $500",
-    "Try Again",
-    "Win a Car",
-    "Try Again",
-];
-
-const colors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A6", "#F3FF33", "#8E44AD", "#3498DB", "#F39C12"];
-const spinDuration = 5000;  // Spin duration in milliseconds
-
-function drawWheel() {
-    const segmentAngle = 2 * Math.PI / segments.length;
-
-    for (let i = 0; i < segments.length; i++) {
-        ctx.beginPath();
-        ctx.moveTo(200, 200);
-        ctx.arc(200, 200, 200, i * segmentAngle, (i + 1) * segmentAngle);
-        ctx.closePath();
-        ctx.fillStyle = colors[i];
-        ctx.fill();
-
-        ctx.save();
-        ctx.translate(200, 200);
-        ctx.rotate((i + 0.5) * segmentAngle);
-        ctx.textAlign = "right";
-        ctx.fillStyle = "#FFF";
-        ctx.font = "18px Arial";
-        ctx.fillText(segments[i], 180, 10);
-        ctx.restore();
-    }
-}
-
-function spinWheel() {
-    const spinAngle = Math.random() * 360 + 360 * 5;  // At least 5 full rotations
-    const startTime = Date.now();
-
-    function animate() {
-        const currentTime = Date.now();
-        const elapsedTime = currentTime - startTime;
-        const easing = elapsedTime / spinDuration;
-
-        if (elapsedTime < spinDuration) {
-            const angle = easing * spinAngle;
-            ctx.clearRect(0, 0, 400, 400);
-            ctx.save();
-            ctx.translate(200, 200);
-            ctx.rotate(angle * Math.PI / 180);
-            ctx.translate(-200, -200);
-            drawWheel();
-            ctx.restore();
-            requestAnimationFrame(animate);
-        } else {
-            const finalAngle = spinAngle % 360;
-            const winningSegment = Math.floor(finalAngle / (360 / segments.length));
-            result.textContent = `We order: ${segments[winningSegment]}`;
-            spinButton.disabled = false;
+const sectors = [
+    { color: "#FFBC03", weight: 1, label: "Antidote" },
+    { color: "#FF5A10", weight: 1, label: "5ive Spice" },
+    { color: "#FFBC03", weight: 1, label: "Zhong Zhong Noodle" },
+    { color: "#FF5A10", weight: 1, label: "New B BBQ" },
+    { color: "#FFBC03", weight: 1, label: "Poke City" },
+    { color: "#FF5A10", weight: 1, label: "Rice & Miso" },
+    { color: "#FFBC03", weight: 1, label: "August Gethering" },
+    { color: "#FF5A10", weight: 1, label: "Jajaja Mexicana" },
+    { color: "#FFBC03", weight: 1, label: "Silky Kitchen" },
+    { color: "#FF5A10", weight: 1, label: "Mala Project" },
+    { color: "#FFBC03", weight: 1, label: "Xia Chao" },
+    { color: "#FF5A10", weight: 1, label: "Dig" },
+    { color: "#FFBC03", weight: 1, label: "Kotti" },
+    { color: "#FF5A10", weight: 1, label: "Hawaiian BBQ" },
+    { color: "#FFBC03", weight: 1, label: "Dimsum Garden" },
+    { color: "#FF5A10", weight: 1, label: "Quality Greens Kitchen" },
+    { color: "#FFBC03", weight: 1, label: "Udom thai restaurant" },
+    { color: "#FF5A10", weight: 1, label: "honeygrow" },
+    { color: "#FFBC03", weight: 1, label: "Jing Li" },
+    { color: "#FF5A10", weight: 1, label: "Dannee" },
+    { color: "#FFBC03", weight: 1, label: "Dos Toros" },
+    { color: "#FF5A10", weight: 1, label: "Mikado" },
+  ];
+  
+  const events = {
+    listeners: {},
+    addListener: function (eventName, fn) {
+      this.listeners[eventName] = this.listeners[eventName] || [];
+      this.listeners[eventName].push(fn);
+    },
+    fire: function (eventName, ...args) {
+      if (this.listeners[eventName]) {
+        for (let fn of this.listeners[eventName]) {
+          fn(...args);
         }
+      }
+    },
+  };
+  
+  const rand = (m, M) => Math.random() * (M - m) + m;
+  const tot = sectors.length;
+  const spinEl = document.querySelector("#spin");
+  const ctx = document.querySelector("#wheel").getContext("2d");
+  const dia = ctx.canvas.width;
+  const rad = dia / 2;
+  const PI = Math.PI;
+  const TAU = 2 * PI;
+  const arc = TAU / sectors.length;
+  
+  const friction = 0.991; // 0.995=soft, 0.99=mid, 0.98=hard
+  let angVel = 0; // Angular velocity
+  let ang = 0; // Angle in radians
+  
+  let spinButtonClicked = false;
+  
+  const getIndex = () => Math.floor(tot - (ang / TAU) * tot) % tot;
+  
+  function drawSector(sector, i) {
+    const ang = arc * i;
+    ctx.save();
+  
+    // COLOR
+    ctx.beginPath();
+    ctx.fillStyle = sector.color;
+    ctx.moveTo(rad, rad);
+    ctx.arc(rad, rad, rad, ang, ang + arc);
+    ctx.lineTo(rad, rad);
+    ctx.fill();
+  
+    // TEXT
+    ctx.translate(rad, rad);
+    ctx.rotate(ang + arc / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#333333";
+    ctx.font = "bold 30px 'Lato', sans-serif";
+    ctx.fillText(sector.label, rad - 10, 10);
+    //
+  
+    ctx.restore();
+  }
+  
+  function rotate() {
+    const sector = sectors[getIndex()];
+    ctx.canvas.style.transform = `rotate(${ang - PI / 2}rad)`;
+  
+    spinEl.textContent = !angVel ? "SPIN" : sector.label;
+    result.textContent = "We are ordering: " + sector.label;
+    spinEl.style.background = sector.color;
+    spinEl.style.color = "#333333";
+  }
+  
+  function frame() {
+    // Fire an event after the wheel has stopped spinning
+    if (!angVel && spinButtonClicked) {
+      const finalSector = sectors[getIndex()];
+      events.fire("spinEnd", finalSector);
+      spinButtonClicked = false; // reset the flag
+      return;
     }
-
-    animate();
-}
-
-drawWheel();
-
-spinButton.addEventListener("click", () => {
-    result.textContent = "";
-    spinButton.disabled = true;
-    spinWheel();
-});
+  
+    angVel *= friction; // Decrement velocity by friction
+    if (angVel < 0.002) angVel = 0; // Bring to stop
+    ang += angVel; // Update angle
+    ang %= TAU; // Normalize angle
+    rotate();
+  }
+  
+  function engine() {
+    frame();
+    requestAnimationFrame(engine);
+  }
+  
+  function init() {
+    sectors.forEach(drawSector);
+    rotate(); // Initial rotation
+    engine(); // Start engine
+    spinEl.addEventListener("click", () => {
+      if (!angVel) angVel = rand(0.25, 0.45);
+      spinButtonClicked = true;
+    });
+  }
+  
+  init();
+  
+  events.addListener("spinEnd", (sector) => {
+    console.log(`Woop! You won ${sector.label}`);
+  });
