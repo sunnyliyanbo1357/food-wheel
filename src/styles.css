@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.wheel-container {
+    margin: 20px auto;
+    position: relative;
+}
+
+#wheel {
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#spinButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 5px #218838;
+}
+
+#spinButton:active {
+    box-shadow: 0 3px #218838;
+    transform: translateY(2px);
+}
+
+#result {
+    font-size: 18px;
+    margin-top: 20px;
+}
