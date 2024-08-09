@@ -1,8 +1,8 @@
 const sectors = [
     { color: "#FFBC03", weight: 1, label: "Antidote" },
     { color: "#FF5A10", weight: 1, label: "5ive Spice" },
-    { color: "#FFBC03", weight: 1, label: "Zhong Zhong Noodle" },
-    { color: "#FF5A10", weight: 1, label: "New B BBQ" },
+    { color: "#FFBC03", weight: 1, label: "ZhongZhong Noodle" },
+    { color: "#FF5A10", weight: 1, label: "NewB BBQ" },
     { color: "#FFBC03", weight: 1, label: "Poke City" },
     { color: "#FF5A10", weight: 1, label: "Rice & Miso" },
     { color: "#FFBC03", weight: 1, label: "August Gethering" },
@@ -14,8 +14,8 @@ const sectors = [
     { color: "#FFBC03", weight: 1, label: "Kotti" },
     { color: "#FF5A10", weight: 1, label: "Hawaiian BBQ" },
     { color: "#FFBC03", weight: 1, label: "Dimsum Garden" },
-    { color: "#FF5A10", weight: 1, label: "Quality Greens Kitchen" },
-    { color: "#FFBC03", weight: 1, label: "Udom thai restaurant" },
+    { color: "#FF5A10", weight: 1, label: "Quality Greens" },
+    { color: "#FFBC03", weight: 1, label: "Udom Thai Restaurant" },
     { color: "#FF5A10", weight: 1, label: "honeygrow" },
     { color: "#FFBC03", weight: 1, label: "Jing Li" },
     { color: "#FF5A10", weight: 1, label: "Dannee" },
@@ -48,7 +48,7 @@ const sectors = [
   const TAU = 2 * PI;
   const arc = TAU / sectors.length;
   
-  const friction = 0.991; // 0.995=soft, 0.99=mid, 0.98=hard
+  const friction = 0.97 // 0.995=soft, 0.99=mid, 0.98=hard
   let angVel = 0; // Angular velocity
   let ang = 0; // Angle in radians
   
@@ -84,8 +84,11 @@ const sectors = [
     const sector = sectors[getIndex()];
     ctx.canvas.style.transform = `rotate(${ang - PI / 2}rad)`;
   
+    var emoji = String.fromCodePoint(0x1F621);
+
     spinEl.textContent = !angVel ? "SPIN" : sector.label;
     result.textContent = "We are ordering: " + sector.label;
+    // if (sector.color == "#FFBC03") result.textContent += emoji;
     spinEl.style.background = sector.color;
     spinEl.style.color = "#333333";
   }
