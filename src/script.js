@@ -6,14 +6,16 @@ const sectors = [
     { color: "#FF5A10", weight: 1, label: "Tacombi" },
     // { color: "#FFBC03", weight: 1, label: "Silky Kitchen" },
     { color: "#FFBC03", weight: 1, label: "Xia Chao" },
-    { color: "#FF5A10", weight: 1, label: "Bare Burger" },
+    // { color: "#FF5A10", weight: 1, label: "Bare Burger" },
+    { color: "#FF5A10", weight: 1, label: "Mikado" },
+    { color: "#FFBC03", weight: 1, label: "12 Charis Cafe" },
     { color: "#FFBC03", weight: 1, label: "Dig" },
     { color: "#FF5A10", weight: 1, label: "Mala Project" },
     { color: "#FFBC03", weight: 1, label: "Kotti" },
     { color: "#FFBC03", weight: 1, label: "Hawaiian BBQ" },
     // { color: "#FFBC03", weight: 1, label: "Dimsum Garden" },
-    { color: "#FFBC03", weight: 1, label: "OverGreens" },
     { color: "#FF5A10", weight: 1, label: "5ive Spice" },
+    { color: "#FFBC03", weight: 1, label: "OverGreens" },
     { color: "#FFBC03", weight: 1, label: "honeygrow" },
     { color: "#FF5A10", weight: 1, label: "ZhongZhong Noodle" },
     // { color: "#FFBC03", weight: 1, label: "Jing Li" },
@@ -22,7 +24,6 @@ const sectors = [
     { color: "#FFBC03", weight: 1, label: "Yasas" },
     { color: "#FF5A10", weight: 1, label: "August Gethering" },
     { color: "#FFBC03", weight: 1, label: "Dos Toros" },
-    { color: "#FF5A10", weight: 1, label: "Mikado" },
     { color: "#FFBC03", weight: 1, label: "Udom Thai Restaurant" },
   ];
   
@@ -87,11 +88,13 @@ const sectors = [
     const sector = sectors[getIndex()];
     ctx.canvas.style.transform = `rotate(${ang - PI / 2}rad)`;
   
-    var emoji = String.fromCodePoint(0x1F621);
+    var angry_emoji = String.fromCodePoint(0x1F621);
+    var happy_emoji = String.fromCodePoint(0x1F60D);
 
     spinEl.textContent = !angVel ? "SPIN" : sector.label;
-    result.textContent = "We are ordering: " + sector.label;
-    // if (sector.color == "#FFBC03") result.textContent += emoji;
+    result.textContent = sector.label;
+    if (sector.color == "#FF5A10") result.textContent += angry_emoji;
+    else result.textContent += happy_emoji;
     spinEl.style.background = sector.color;
     spinEl.style.color = "#333333";
   }
