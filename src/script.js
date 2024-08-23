@@ -5,15 +5,14 @@ const sectors = [
     { color: "#FFBC03", weight: 1, label: "Rice & Miso" },
     { color: "#FF5A10", weight: 1, label: "Tacombi" },
     // { color: "#FFBC03", weight: 1, label: "Silky Kitchen" },
-    { color: "#FF5A10", weight: 1, label: "Bare Burger" },
     { color: "#FFBC03", weight: 1, label: "Xia Chao" },
+    { color: "#FF5A10", weight: 1, label: "Bare Burger" },
     { color: "#FFBC03", weight: 1, label: "Dig" },
     { color: "#FF5A10", weight: 1, label: "Mala Project" },
     { color: "#FFBC03", weight: 1, label: "Kotti" },
     { color: "#FFBC03", weight: 1, label: "Hawaiian BBQ" },
     // { color: "#FFBC03", weight: 1, label: "Dimsum Garden" },
     { color: "#FFBC03", weight: 1, label: "OverGreens" },
-    { color: "#FFBC03", weight: 1, label: "Udom Thai Restaurant" },
     { color: "#FF5A10", weight: 1, label: "5ive Spice" },
     { color: "#FFBC03", weight: 1, label: "honeygrow" },
     { color: "#FF5A10", weight: 1, label: "ZhongZhong Noodle" },
@@ -24,6 +23,7 @@ const sectors = [
     { color: "#FF5A10", weight: 1, label: "August Gethering" },
     { color: "#FFBC03", weight: 1, label: "Dos Toros" },
     { color: "#FF5A10", weight: 1, label: "Mikado" },
+    { color: "#FFBC03", weight: 1, label: "Udom Thai Restaurant" },
   ];
   
   const events = {
