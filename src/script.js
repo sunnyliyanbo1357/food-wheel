@@ -135,5 +135,3 @@ const sectors = [
   events.addListener("spinEnd", (sector) => {
     console.log(`Woop! You won ${sector.label}`);
   });
-
-  
